@@ -14,7 +14,10 @@ function divide(x, y){
     return x / y;
 }
 
-console.log(add(2, 2))
-console.log(subtract(4, 2))
-console.log(multiply(2, 2))
-console.log(divide(6, 2))
+function operate(x, y, operation){
+    return operation(x, y);
+}
+
+let result = operate(5, 10, add)
+
+console.log(result)
