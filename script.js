@@ -1,3 +1,5 @@
+
+
 function add(x, y){
     return x + y;
 }
@@ -17,6 +19,11 @@ function divide(x, y){
 function operate(x, y, operation){
     return operation(x, y);
 }
+
+operator.addEventListener("click", () => {
+
+})
+
 
 let result = operate(5, 10, add)
 
