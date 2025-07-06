@@ -1,4 +1,6 @@
-
+const digit = document.querySelector("#digits")
+const display = document.querySelector("#display")
+let number;
 
 function add(x, y){
     return x + y;
@@ -20,11 +22,12 @@ function operate(x, y, operation){
     return operation(x, y);
 }
 
-operator.addEventListener("click", () => {
-
+digit.addEventListener('click', (event) => {
+    if(event.target.tagName === 'BUTTON'){
+        display.innerHTML = event.target.innerText;
+        number = event.target.innerText;
+    }
 })
 
 
 let result = operate(5, 10, add)
-
-console.log(result)
