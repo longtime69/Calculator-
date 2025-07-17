@@ -29,29 +29,24 @@ function calculate(){
     let firstNumber = '';
     let secondNumber = '';
     let operator = null;
+    let isSecondNumber = false;
 
     digit.addEventListener('click', (event) => {
         if(event.target.className === 'digit'){
-            
+            if (!isSecondNumber){
                 firstNumber += event.target.innerText;
                 display.innerHTML = firstNumber;
-            
-        }
-        
-
-        if(event.target.className === 'digit' && firstNumber != null && operator != null){
-            
+            } else {
                 secondNumber += event.target.innerText;
                 display.innerHTML = secondNumber;
-            
+            }
         }
-
-    
     })
 
     operators.addEventListener('click', (event) => {
-        if(event.target.className === 'operator' && firstNumber != '') {
+        if(event.target.className === 'operator' && firstNumber !== '') {
                 operator = event.target.innerText;
+                isSecondNumber = true;
         }
 
         
