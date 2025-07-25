@@ -1,9 +1,8 @@
-const digit = document.querySelector("#digits")
+const btns = document.querySelector("#btns")
 const display = document.querySelector("#display")
 const operators = document.querySelector("#operators")
 const Operate = document.querySelector("#operate")
 const clear = document.querySelector("#Clear")
-let number;
 
 function add(x, y){
     return x + y;
@@ -31,7 +30,7 @@ function calculate(){
     let operator = null;
     let isSecondNumber = false;
     
-        digit.addEventListener('click', (event) => {
+        btns.addEventListener('click', (event) => {
         if(event.target.className === 'digit'){
             if (!isSecondNumber){
                 firstNumber += event.target.innerText;
@@ -43,7 +42,7 @@ function calculate(){
         }
         })
 
-        operators.addEventListener('click', (event) => {
+        btns.addEventListener('click', (event) => {
             if(event.target.className === 'operator' && firstNumber !== '') {
                     operator = event.target.innerText;
                     isSecondNumber = true;
@@ -53,14 +52,15 @@ function calculate(){
         })
 
         Operate.addEventListener('click', (event) => {
-            if(event.target.textContent === 'Operate'){
+            if(event.target.textContent === '='){
                 let operatorF;
-                if (operator === 'Add') operatorF = add;
-                if (operator === 'Subtract') operatorF = subtract;
-                if (operator === 'Multiply') operatorF = multiply;
-                if (operator === 'Divide') operatorF = divide;
+                if (operator === '+') operatorF = add;
+                if (operator === '-') operatorF = subtract;
+                if (operator === '*') operatorF = multiply;
+                if (operator === '/') operatorF = divide;
                 let result = operate(Number(firstNumber), Number(secondNumber), operatorF);
                 display.innerHTML = result;
+                
 
                 console.log(result)
 
@@ -72,7 +72,7 @@ function calculate(){
         })
 
         clear.addEventListener('click', (event) => {
-        if(event.target.textContent === 'Clear'){
+        if(event.target.textContent === 'C'){
             firstNumber = '';
             secondNumber = '';
             operator = null;
