@@ -64,7 +64,7 @@ function calculate(){
 
                 console.log(result)
 
-                firstNumber = '';
+                firstNumber = result;
                 secondNumber = '';
                 operator = null;
                 isSecondNumber = false;
