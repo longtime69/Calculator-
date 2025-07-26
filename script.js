@@ -29,9 +29,18 @@ function calculate(){
     let secondNumber = '';
     let operator = null;
     let isSecondNumber = false;
+    let resultDisplayed = false;
     
         btns.addEventListener('click', (event) => {
         if(event.target.className === 'digit'){
+            if(resultDisplayed && !isSecondNumber){
+                firstNumber = '';
+                secondNumber = '';
+                operator = null;
+                isSecondNumber = false;
+                display.innerHTML = '';
+                resultDisplayed = false;
+            }
             if (!isSecondNumber){
                 firstNumber += event.target.innerText;
                 display.innerHTML = firstNumber;
@@ -44,8 +53,15 @@ function calculate(){
 
         btns.addEventListener('click', (event) => {
             if(event.target.className === 'operator' && firstNumber !== '') {
+                if(resultDisplayed){
+                    isSecondNumber = true;
+                    secondNumber = '';
+                    resultDisplayed = false;
+                } else {
                     operator = event.target.innerText;
                     isSecondNumber = true;
+                }
+                operator = event.target.innerText;
             }
 
             
@@ -64,10 +80,11 @@ function calculate(){
 
                 console.log(result)
 
-                firstNumber = result;
+                firstNumber = result.toString();
                 secondNumber = '';
                 operator = null;
                 isSecondNumber = false;
+                resultDisplayed = true;
             }
         })
 
@@ -78,6 +95,7 @@ function calculate(){
             operator = null;
             isSecondNumber = false;
             display.innerHTML = '0';
+            resultDisplayed = false;
         }
         })
     
