@@ -1,8 +1,14 @@
 const btns = document.querySelector("#btns")
 const display = document.querySelector("#display")
-const operators = document.querySelector("#operators")
+const Operator = document.querySelector(".operator")
 const Operate = document.querySelector("#operate")
 const clear = document.querySelector("#Clear")
+
+let previousNumber = '';
+let currentNumber = '';
+let operator = null;
+let isCurrentNumber = false;
+let resultDisplayed = false;
 
 function add(x, y){
     return x + y;
@@ -20,80 +26,94 @@ function divide(x, y){
     return x / y;
 }
 
-function operate(x, y, operation){
-    return operation(x, y);
+function operate(previousNumber, currentNumber, operation){
+    let x = Number(previousNumber);
+    let y = Number(currentNumber);
+
+    if (operation === '+'){
+        return add(x,y);
+    } else if (operation === '-'){
+        return subtract(x,y);
+    } else if (operation === '*'){
+        return multiply(x,y);
+    } else if (operation === '/'){
+        return divide(x,y);
+    } else {
+        return 'ERROR'
+    }
 }
 
 function calculate(){
-    let firstNumber = '';
-    let secondNumber = '';
-    let operator = null;
-    let isSecondNumber = false;
-    let resultDisplayed = false;
+    
     
         btns.addEventListener('click', (event) => {
         if(event.target.className === 'digit'){
-            if(resultDisplayed && !isSecondNumber){
-                firstNumber = '';
-                secondNumber = '';
+            if(resultDisplayed && !isCurrentNumber){
+                currentNumber = '';
+                previousNumber = '';
                 operator = null;
-                isSecondNumber = false;
+                isCurrentNumber = false;
                 display.innerHTML = '';
                 resultDisplayed = false;
             }
-            if (!isSecondNumber){
-                firstNumber += event.target.innerText;
-                display.innerHTML = firstNumber;
+            if (!isCurrentNumber){
+                previousNumber += event.target.innerText;
+                display.innerHTML = previousNumber;
             } else {
-                secondNumber += event.target.innerText;
-                display.innerHTML = secondNumber;
+                currentNumber += event.target.innerText;
+                display.innerHTML = currentNumber;
             }
         }
         })
 
         btns.addEventListener('click', (event) => {
-            if(event.target.className === 'operator' && firstNumber !== '') {
-                if(resultDisplayed){
-                    isSecondNumber = true;
-                    secondNumber = '';
-                    resultDisplayed = false;
-                } else {
-                    operator = event.target.innerText;
-                    isSecondNumber = true;
+            if(event.target.className === 'operator' && previousNumber !== '') {
+                if(isCurrentNumber && currentNumber != ''){
+                    let result = operate(previousNumber, currentNumber, operator);
+                    previousNumber = result.toString();
+                    display.innerHTML = previousNumber;
+                    currentNumber = '';
                 }
+            
                 operator = event.target.innerText;
+                isCurrentNumber = true;
+                resultDisplayed = false;
             }
 
             
         })
 
+        /*
+        Operator.addEventListener('click', (event) => {
+            if(event.target.textContent === '+' || event.target.textContent === '-' || event.target.textContent === '*' || event.target.textContent === '/'){
+                if(firstNumber != '' && secondNumber != ''){
+                    
+                }
+            }
+        })
+            */
+
         Operate.addEventListener('click', (event) => {
             if(event.target.textContent === '='){
-                let operatorF;
-                if (operator === '+') operatorF = add;
-                if (operator === '-') operatorF = subtract;
-                if (operator === '*') operatorF = multiply;
-                if (operator === '/') operatorF = divide;
-                let result = operate(Number(firstNumber), Number(secondNumber), operatorF);
+               let result = operate(previousNumber, currentNumber, operator)
                 display.innerHTML = result;
-                
 
                 console.log(result)
 
-                firstNumber = result.toString();
-                secondNumber = '';
+                previousNumber = result.toString();
+                currentNumber = '';
                 operator = null;
-                isSecondNumber = false;
+                isCurrentNumber = false;
                 resultDisplayed = true;
             }
         })
 
         clear.addEventListener('click', (event) => {
         if(event.target.textContent === 'C'){
-            firstNumber = '';
-            secondNumber = '';
+            previousNumber = '';
+            currentNumber = '';
             operator = null;
-            isSecondNumber = false;
+            isCurrentNumber = false;
             display.innerHTML = '0';
             resultDisplayed = false;
         }
