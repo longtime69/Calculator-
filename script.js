@@ -83,16 +83,6 @@ function calculate(){
             
         })
 
-        /*
-        Operator.addEventListener('click', (event) => {
-            if(event.target.textContent === '+' || event.target.textContent === '-' || event.target.textContent === '*' || event.target.textContent === '/'){
-                if(firstNumber != '' && secondNumber != ''){
-                    
-                }
-            }
-        })
-            */
-
         Operate.addEventListener('click', (event) => {
             if(event.target.textContent === '='){
                let result = operate(previousNumber, currentNumber, operator)
