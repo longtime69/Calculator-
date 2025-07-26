@@ -39,7 +39,7 @@ function operate(previousNumber, currentNumber, operation){
     } else if (operation === '/'){
         return divide(x,y);
     } else {
-        return 'ERROR'
+        return x;
     }
 }
 
